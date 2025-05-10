@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacking Library</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="title-container">
+            <h1>HACKING LIBRARY</h1>
+            <p class="subtitle">Your arsenal for ethical testing and security research</p>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#tools" data-page="tools" class="nav-link">TOOLS</a></li>
+                <li><a href="#about" data-page="about" class="nav-link">ABOUT</a></li>
+                <li><a href="#privacy" data-page="privacy" class="nav-link">PRIVACY</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Tools Section -->
+        <section id="tools" class="page-section active">
+            <h2>TOOLS ARSENAL</h2>
+            <input type="text" id="search" placeholder="Search for hacking tools..." />
+
+            <div class="filter-notice">
+                <p><strong>⚠️ IMPORTANT:</strong> Before using these tools, it's essential to set up a proper testing lab. Please install <a href="https://www.kali.org/get-kali/" target="_blank">Kali Linux</a> and <a href="https://www.virtualbox.org/wiki/Downloads" target="_blank">VirtualBox</a>. These tools are intended for ethical use only, and we cannot be held responsible for any illegal activities. Always prioritize safety and legality in your practices!</p>
+            </div>
+
+            <div class="filter-container">
+                <span class="filter-label">Deploy by type:</span>
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="network">Network</button>
+                <button class="filter-btn" data-filter="web">Web</button>
+                <button class="filter-btn" data-filter="password">Password</button>
+                <button class="filter-btn" data-filter="vulnerability">Vulnerability</button>
+                <button class="filter-btn" data-filter="wireless">Wireless</button>
+                <button class="filter-btn" data-filter="forensic">Forensic</button>
+                <button class="filter-btn" data-filter="osint">OSINT</button>
+                <button class="filter-btn" data-filter="malware">Malware</button>
+            </div>
+            
+            <div class="tools-container">
+                <!-- Tool: Nmap -->
+                <div class="tool" data-name="Nmap" data-type="network">
+                    <span class="tool-type">NETWORK</span>
+                    <h3>Nmap</h3>
+                    <p>Nmap is a network scanning tool used to discover hosts and services on a computer network, often for security auditing and network inventory purposes.</p>
+                    <a href="https://nmap.org/" target="_blank" class="tool-website">Official Website</a>
+                    <h4 class="install-toggle">Installation Instructions <span class="toggle-icon">+</span></h4>
+                    <div class="install-instructions" style="display: none;">
+                        <p><strong>Kali Linux:</strong> Pre-installed. If not, use <code>sudo apt-get install nmap</code></p>
+                        <p><strong>Windows:</strong> Download from <a href="https://nmap.org/download.html" target="_blank">nmap.org/download.html</a></p>
+                    </div>
+                </div>
+
+                <!-- Tool: Wireshark -->
+                <div class="tool" data-name="Wireshark" data-type="network">
+                    <span class="tool-type">NETWORK</span>
+                    <h3>Wireshark</h3>
+                    <p>Wireshark is a network protocol analyzer that captures and displays data packets traveling over a network. Essential for analyzing network traffic and troubleshooting.</p>
+                    <a href="https://www.wireshark.org/" target="_blank" class="tool-website">Official Website</a>
+                    <h4 class="install-toggle">Installation Instructions <span class="toggle-icon">+</span></h4>
+                    <div class="install-instructions" style="display: none;">
+                        <p><strong>Kali Linux:</strong> Pre-installed. If not, use <code>sudo apt-get install wireshark</code></p>
+                        <p><strong>Other Systems:</strong> Download from <a href="https://www.wireshark.org/download.html" target="_blank">wireshark.org/download.html</a></p>
+                    </div>
+                </div>
+
+                <!-- Tool: Burp Suite -->
+                <div class="tool" data-name="Burp Suite" data-type="web">
+                    <span class="tool-type">WEB</span>
+                    <h3>Burp Suite</h3>
+                    <p>Burp Suite is a web application security testing tool that functions as an intercepting proxy, allowing security professionals to test for vulnerabilities in web applications.</p>
+                    <a href="https://portswigger.net/burp" target="_blank" class="tool-website">Official Website</a>
+                    <h4 class="install-toggle">Installation Instructions <span class="toggle-icon">+</span></h4>
+                    <div class="install-instructions" style="display: none;">
+                        <p><strong>Kali Linux:</strong> Already pre-installed. Launch from Applications menu.</p>
+                        <p><strong>Other Systems:</strong> Download from <a href="https://portswigger.net/burp/communitydownload" target="_blank">portswigger.net</a></p>
+                    </div>
+                </div>
+
+                <!-- Tool: Sqlmap -->
+                <div class="tool" data-name="Sqlmap" data-type="web">
+                    <span class="tool-type">WEB</span>
+                    <h3>Sqlmap</h3>
+                    <p>Sqlmap is an open-source security tool that automates SQL injection detection and exploitation. Perfect for web application security testing.</p>
+                    <a href="http://sqlmap.org/" target="_blank" class="tool-website">Official Website</a>
+                    <h4 class="install-toggle">Installation Instructions <span class="toggle-icon">+</span></h4>
+                    <div class="install-instructions" style="display: none;">
+                        <p><strong>Kali Linux:</strong> Pre-installed. If not: <code>git clone --depth 1 https://github.com/sqlmapproject/sqlmap.git sqlmap-dev</code></p>
+                    </div>
+                </div>
+                
+                <!-- Tool: John the Ripper -->
+                <div class="tool" data-name="John the Ripper" data-type="password">
+                    <span class="tool-type">PASSWORD</span>
+                    <h3>John the Ripper</h3>
+                    <p>John the Ripper is a free password cracking software tool designed to detect weak Unix passwords and can run against various encrypted password formats.</p>
+                    <a href="https://www.openwall.com/john/" target="_blank" class="tool-website">Official Website</a>
+                    <h4 class="install-toggle">Installation Instructions <span class="toggle-icon">+</span></h4>
+                    <div class="install-instructions" style="display: none;">
+                        <p><strong>Kali Linux:</strong> Pre-installed. If not, use <code>sudo apt-get install john</code></p>
+                    </div>
+                </div>
+
+                <!-- Tool: Metasploit -->
+                <div class="tool" data-name="Metasploit" data-type="vulnerability">
+                    <span class="tool-type">VULNERABILITY</span>
+                    <h3>Metasploit</h3>
+                    <p>Metasploit is an open-source platform that supports vulnerability research, exploit development, and the execution of penetration tests. The Swiss Army knife of penetration testing.</p>
+                    <a href="https://www.metasploit.com/" target="_blank" class="tool-website">Official Website</a>
+                    <h4 class="install-toggle">Installation Instructions <span class="toggle-icon">+</span></h4>
+                    <div class="install-instructions" style="display: none;">
+                        <p><strong>Kali Linux:</strong> Pre-installed. If not, use <code>sudo apt-get install metasploit-framework</code></p>
+                    </div>
+                </div>
+
+                <!-- Tool: Aircrack-ng -->
+                <div class="tool" data-name="Aircrack-ng" data-type="wireless">
+                    <span class="tool-type">WIRELESS</span>
+                    <h3>Aircrack-ng</h3>
+                    <p>Aircrack-ng is a suite of tools for auditing wireless networks, focusing on Wi-Fi security assessment and cracking WEP/WPA encryption.</p>
+                    <a href="https://www.aircrack-ng.org/" target="_blank" class="tool-website">Official Website</a>
+                    <h4 class="install-toggle">Installation Instructions <span class="toggle-icon">+</span></h4>
+                    <div class="install-instructions" style="display: none;">
+                        <p><strong>Kali Linux:</strong> Pre-installed. If not, use <code>sudo apt-get install aircrack-ng</code></p>
+                    </div>
+                </div>
+
+                <!-- Tool: Autopsy -->
+                <div class="tool" data-name="Autopsy" data-type="forensic">
+                    <span class="tool-type">FORENSIC</span>
+                    <h3>Autopsy</h3>
+                    <p>Autopsy is a digital forensics platform and graphical interface to the Sleuth Kit framework, allowing for detailed analysis of disk images and recovering files.</p>
+                    <a href="https://www.autopsy.com/" target="_blank" class="tool-website">Official Website</a>
+                    <h4 class="install-toggle">Installation Instructions <span class="toggle-icon">+</span></h4>
+                    <div class="install-instructions" style="display: none;">
+                        <p><strong>Kali Linux:</strong> Pre-installed. If not, use <code>sudo apt-get install autopsy</code></p>
+                    </div>
+                </div>
+                
+                <!-- Additional Tools -->
+                <!-- Tool: Hashcat -->
+                <div class="tool" data-name="Hashcat" data-type="password">
+                    <span class="tool-type">PASSWORD</span>
+                    <h3>Hashcat</h3>
+                    <p>Hashcat is the world's fastest and most advanced password recovery tool, supporting five unique attack modes for over 300 highly-optimized hashing algorithms.</p>
+                    <a href="https://hashcat.net/" target="_blank" class="tool-website">Official Website</a>
+                    <h4 class="install-toggle">Installation Instructions <span class="toggle-icon">+</span></h4>
+                    <div class="install-instructions" style="display: none;">
+                        <p><strong>Kali Linux:</strong> Pre-installed. If not, use <code>sudo apt-get install hashcat</code></p>
+                    </div>
+                </div>
+                
+                <!-- Tool: OWASP ZAP -->
+                <div class="tool" data-name="OWASP ZAP" data-type="web">
+                    <span class="tool-type">WEB</span>
+                    <h3>OWASP ZAP</h3>
+                    <p>OWASP Zed Attack Proxy (ZAP) is an open-source web application security scanner. It's designed to be used by people with a wide range of security experience.</p>
+                    <a href="https://www.zaproxy.org/" target="_blank" class="tool-website">Official Website</a>
+                    <h4 class="install-toggle">Installation Instructions <span class="toggle-icon">+</span></h4>
+                    <div class="install-instructions" style="display: none;">
+                        <p><strong>Kali Linux:</strong> Pre-installed or <code>sudo apt install zaproxy</code></p>
+                        <p><strong>Other Systems:</strong> Download from <a href="https://www.zaproxy.org/download/" target="_blank">zaproxy.org/download</a></p>
+                    </div>
+                </div>
+                
+                <!-- Tool: Hydra -->
+                <div class="tool" data-name="Hydra" data-type="password">
+                    <span class="tool-type">PASSWORD</span>
+                    <h3>Hydra</h3>
+                    <p>THC-Hydra is a fast and flexible online password cracking tool that supports numerous protocols including FTP, HTTP, HTTPS, SMB, SSH, and many more.</p>
+                    <a href="https://github.com/vanhauser-thc/thc-hydra" target="_blank" class="tool-website">Official Website</a>
+                    <h4 class="install-toggle">Installation Instructions <span class="toggle-icon">+</span></h4>
+                    <div class="install-instructions" style="display: none;">
+                        <p><strong>Kali Linux:</strong> Pre-installed. If not, use <code>sudo apt-get install hydra</code></p>
+                    </div>
+                </div>
+                
+                <!-- Tool: Maltego -->
+                <div class="tool" data-name="Maltego" data-type="osint">
+                    <span class="tool-type">OSINT</span>
+                    <h3>Maltego</h3>
+                    <p>Maltego is an interactive data mining tool that renders directed graphs for link analysis. It's used for investigations on the internet to find relationships between pieces of information.</p>
+                    <a href="https://www.maltego.com/" target="_blank" class="tool-website">Official Website</a>
+                    <h4 class="install-toggle">Installation Instructions <span class="toggle-icon">+</span></h4>
+                    <div class="install-instructions" style="display: none;">
+                        <p><strong>Kali Linux:</strong> Pre-installed. If not, use <code>sudo apt-get install maltego</code></p>
+                    </div>
+                </div>
+                
+                <!-- Tool: Shodan -->
+                <div class="tool" data-name="Shodan" data-type="osint">
+                    <span class="tool-type">OSINT</span>
+                    <h3>Shodan</h3>
+                    <p>Shodan is a search engine that lets you find specific types of computers (routers, servers, etc.) connected to the internet using a variety of filters.</p>
+                    <a href="https://www.shodan.io/" target="_blank" class="tool-website">Official Website</a>
+                    <h4 class="install-toggle">Installation Instructions <span class="toggle-icon">+</span></h4>
+                    <div class="install-instructions" style="display: none;">
+                        <p><strong>Python Package:</strong> <code>pip install shodan</code></p>
+                        <p><strong>Usage:</strong> Create an account at shodan.io to get an API key</p>
+                    </div>
+                </div>
+                
+                <!-- Tool: Nikto -->
+                <div class="tool" data-name="Nikto" data-type="web">
+                    <span class="tool-type">WEB</span>
+                    <h3>Nikto</h3>
+                    <p>Nikto is an open-source web server scanner that performs comprehensive tests against web servers for multiple dangerous files, outdated versions, and specific problems.</p>
+                    <a href="https://cirt.net/Nikto2" target="_blank" class="tool-website">Official Website</a>
+                    <h4 class="install-toggle">Installation Instructions <span class="toggle-icon">+</span></h4>
+                    <div class="install-instructions" style="display: none;">
+                        <p><strong>Kali Linux:</strong> Pre-installed. If not, use <code>sudo apt-get install nikto</code></p>
+                    </div>
+                </div>
+                
+                <!-- Tool: Ghidra -->
+                <div class="tool" data-name="Ghidra" data-type="malware">
+                    <span class="tool-type">MALWARE</span>
+                    <h3>Ghidra</h3>
+                    <p>Ghidra is a software reverse engineering (SRE) framework developed by NSA. It helps analyze malicious code and malware like viruses, and can give cybersecurity professionals a better understanding of potential vulnerabilities in their networks and systems.</p>
+                    <a href="https://ghidra-sre.org/" target="_blank" class="tool-website">Official Website</a>
+                    <h4 class="install-toggle">Installation Instructions <span class="toggle-icon">+</span></h4>
+                    <div class="install-instructions" style="display: none;">
+                        <p><strong>Kali Linux:</strong> <code>sudo apt install ghidra</code></p>
+                        <p><strong>Other Systems:</strong> Download from <a href="https://ghidra-sre.org/" target="_blank">ghidra-sre.org</a></p>
+                    </div>
+                </div>
+                
+                <!-- Tool: Radare2 -->
+                <div class="tool" data-name="Radare2" data-type="malware">
+                    <span class="tool-type">MALWARE</span>
+                    <h3>Radare2</h3>
+                    <p>Radare2 is a complete framework for reverse-engineering and analyzing binaries; composed of a set of small utilities that can be used together or independently.</p>
+                    <a href="https://rada.re/n/" target="_blank" class="tool-website">Official Website</a>
+                    <h4 class="install-toggle">Installation Instructions <span class="toggle-icon">+</span></h4>
+                    <div class="install-instructions" style="display: none;">
+                        <p><strong>Kali Linux:</strong> Pre-installed or <code>sudo apt install radare2</code></p>
+                        <p><strong>From Source:</strong> <code>git clone https://github.com/radareorg/radare2 && cd radare2 && sys/install.sh</code></p>
+                    </div>
+                </div>
+                
+                <!-- Tool: WPScan -->
+                <div class="tool" data-name="WPScan" data-type="web">
+                    <span class="tool-type">WEB</span>
+                    <h3>WPScan</h3>
+                    <p>WPScan is a free, for non-commercial use, black box WordPress security scanner that can be used to scan remote WordPress installations to find security issues.</p>
+                    <a href="https://wpscan.org/" target="_blank" class="tool-website">Official Website</a>
+                    <h4 class="install-toggle">Installation Instructions <span class="toggle-icon">+</span></h4>
+                    <div class="install-instructions" style="display: none;">
+                        <p><strong>Kali Linux:</strong> Pre-installed. If not, use <code>sudo apt-get install wpscan</code></p>
+                    </div>
+                </div>
+                <!-- Tool: Gobuster -->
+<div class="tool" data-name="Gobuster" data-type="web">
+    <span class="tool-type">WEB</span>
+    <h3>Gobuster</h3>
+    <p>Gobuster is a directory/file & DNS busting tool written in Go. It's used to brute-force URIs (directories and files) in web sites and DNS subdomains.</p>
+    <a href="https://github.com/OJ/gobuster" target="_blank" class="tool-website">Official Website</a>
+    <h4 class="install-toggle">Installation Instructions <span class="toggle-icon">+</span></h4>
+    <div class="install-instructions" style="display: none;">
+        <p><strong>Kali Linux:</strong> Pre-installed. If not, use <code>sudo apt install gobuster</code></p>
+    </div>
+</div>
+
+<!-- Tool: Volatility -->
+<div class="tool" data-name="Volatility" data-type="forensic">
+    <span class="tool-type">FORENSIC</span>
+    <h3>Volatility</h3>
+    <p>Volatility is an open-source memory forensics framework for incident response and malware analysis. It's used for extracting digital artifacts from volatile memory (RAM) samples.</p>
+    <a href="https://www.volatilityfoundation.org/" target="_blank" class="tool-website">Official Website</a>
+    <h4 class="install-toggle">Installation Instructions <span class="toggle-icon">+</span></h4>
+    <div class="install-instructions" style="display: none;">
+        <p><strong>Kali Linux:</strong> Pre-installed. If not, use <code>sudo apt install volatility</code></p>
+    </div>
+</div>
+
+<!-- Tool: Dirb -->
+<div class="tool" data-name="Dirb" data-type="web">
+    <span class="tool-type">WEB</span>
+    <h3>Dirb</h3>
+    <p>Dirb is a web content scanner designed to find existing and/or hidden web objects. It uses a wordlist to brute-force directories and files on web servers.</p>
+    <a href="http://dirb.sourceforge.net/" target="_blank" class="tool-website">Official Website</a>
+    <h4 class="install-toggle">Installation Instructions <span class="toggle-icon">+</span></h4>
+    <div class="install-instructions" style="display: none;">
+        <p><strong>Kali Linux:</strong> Pre-installed. If not, use <code>sudo apt install dirb</code></p>
+    </div>
+</div>
+
+<!-- Tool: Recon-ng -->
+<div class="tool" data-name="Recon-ng" data-type="osint">
+    <span class="tool-type">OSINT</span>
+    <h3>Recon-ng</h3>
+    <p>Recon-ng is a full-featured reconnaissance framework designed for web-based open source reconnaissance. It contains modules to interact with popular OSINT APIs and websites.</p>
+    <a href="https://github.com/lanmaster53/recon-ng" target="_blank" class="tool-website">Official Website</a>
+    <h4 class="install-toggle">Installation Instructions <span class="toggle-icon">+</span></h4>
+    <div class="install-instructions" style="display: none;">
+        <p><strong>Kali Linux:</strong> Pre-installed. If not, use <code>sudo apt install recon-ng</code></p>
+    </div>
+</div>
+
+<!-- Tool: theHarvester -->
+<div class="tool" data-name="theHarvester" data-type="osint">
+    <span class="tool-type">OSINT</span>
+    <h3>theHarvester</h3>
+    <p>theHarvester is a tool designed to gather open source intelligence (OSINT) on a company or domain. It collects emails, names, subdomains, IPs, and URLs from various public sources.</p>
+    <a href="https://github.com/laramies/theHarvester" target="_blank" class="tool-website">Official Website</a>
+    <h4 class="install-toggle">Installation Instructions <span class="toggle-icon">+</span></h4>
+    <div class="install-instructions" style="display: none;">
+        <p><strong>Kali Linux:</strong> Pre-installed. If not, use <code>sudo apt install theharvester</code></p>
+    </div>
+</div>
+
+<!-- Tool: Hashid -->
+<div class="tool" data-name="Hashid" data-type="password">
+    <span class="tool-type">PASSWORD</span>
+    <h3>Hashid</h3>
+    <p>Hashid is a tool that identifies the different types of hashes used to encrypt data, particularly passwords. It can recognize over 220 different hash types.</p>
+    <a href="https://github.com/psypanda/hashID" target="_blank" class="tool-website">Official Website</a>
+    <h4 class="install-toggle">Installation Instructions <span class="toggle-icon">+</span></h4>
+    <div class="install-instructions" style="display: none;">
+        <p><strong>Kali Linux:</strong> Pre-installed. If not, use <code>sudo apt install hashid</code></p>
+    </div>
+</div>
+
+<!-- Tool: Ettercap -->
+<div class="tool" data-name="Ettercap" data-type="network">
+    <span class="tool-type">NETWORK</span>
+    <h3>Ettercap</h3>
+    <p>Ettercap is a comprehensive suite for man-in-the-middle attacks on LAN. It features sniffing of live connections, content filtering on the fly, and support for active and passive dissection of many protocols.</p>
+    <a href="https://www.ettercap-project.org/" target="_blank" class="tool-website">Official Website</a>
+    <h4 class="install-toggle">Installation Instructions <span class="toggle-icon">+</span></h4>
+    <div class="install-instructions" style="display: none;">
+        <p><strong>Kali Linux:</strong> Pre-installed. If not, use <code>sudo apt install ettercap-graphical</code></p>
+    </div>
+</div>
+
+<!-- Tool: Binwalk -->
+<div class="tool" data-name="Binwalk" data-type="forensic">
+    <span class="tool-type">FORENSIC</span>
+    <h3>Binwalk</h3>
+    <p>Binwalk is a tool for searching binary files like images and firmware for embedded files and code. It's particularly useful for extracting firmware images and identifying hidden data within files.</p>
+    <a href="https://github.com/ReFirmLabs/binwalk" target="_blank" class="tool-website">Official Website</a>
+    <h4 class="install-toggle">Installation Instructions <span class="toggle-icon">+</span></h4>
+    <div class="install-instructions" style="display: none;">
+        <p><strong>Kali Linux:</strong> Pre-installed. If not, use <code>sudo apt install binwalk</code></p>
+    </div>
+</div>
+
+<!-- Tool: Bettercap -->
+<div class="tool" data-name="Bettercap" data-type="network">
+    <span class="tool-type">NETWORK</span>
+    <h3>Bettercap</h3>
+    <p>Bettercap is a powerful, easily extensible and portable framework written in Go that aims to offer to security researchers, red teamers and reverse engineers an easy to use, all-in-one solution for network reconnaissance and attacks.</p>
+    <a href="https://www.bettercap.org/" target="_blank" class="tool-website">Official Website</a>
+    <h4 class="install-toggle">Installation Instructions <span class="toggle-icon">+</span></h4>
+    <div class="install-instructions" style="display: none;">
+        <p><strong>Kali Linux:</strong> Pre-installed. If not, use <code>sudo apt install bettercap</code></p>
+    </div>
+</div>
+
+<!-- Tool: CeWL -->
+<div class="tool" data-name="CeWL" data-type="password">
+    <span class="tool-type">PASSWORD</span>
+    <h3>CeWL</h3>
+    <p>CeWL (Custom Word List generator) is a ruby application that spiders a given URL, up to a specified depth, and returns a list of words which can then be used for password cracking.</p>
+    <a href="https://github.com/digininja/CeWL" target="_blank" class="tool-website">Official Website</a>
+    <h4 class="install-toggle">Installation Instructions <span class="toggle-icon">+</span></h4>
+    <div class="install-instructions" style="display: none;">
+        <p><strong>Kali Linux:</strong> Pre-installed. If not, use <code>sudo apt install cewl</code></p>
+    </div>
+</div>
+            </div>
+        </section>
+
+       <!-- About Section -->
+        <section id="about" class="page-section">
+            <h2>ABOUT THE HACKING LIBRARY</h2>
+            
+            <p>Welcome to the Hacking Library - your ethical hacking knowledge repository created by a passionate developer and cybersecurity enthusiast with a mission to democratize security knowledge.</p>
+            
+            <h3>OUR MISSION</h3>
+            <p>The Hacking Library was established to ensure that everyone has easy access to the tools needed for cybersecurity. Many individuals face challenges in finding the right resources. To help address this issue, I have compiled a comprehensive collection of essential cybersecurity tools. This resource is designed to provide users with the tools they need to effectively navigate the cybersecurity landscape.</p>
+            
+            <h3>WHAT WE PROVIDE</h3>
+            <ul>
+                <li><strong>Curated Tool Collection:</strong> We've assembled the most essential security testing tools used by professionals worldwide, complete with installation instructions and practical use cases.</li>
+                <li><strong>Ethical Focus:</strong> All resources are provided strictly for defensive security, educational purposes, and authorized testing only.</li>
+                <li><strong>Community Knowledge:</strong> This library represents years of practical experience in the field, distilled into an accessible format for the community.</li>
+            </ul>
+            
+            <h3>WHO'S BEHIND THIS?</h3>
+            <p>I'm just a developer with a passion for cybersecurity who believes that understanding vulnerabilities is the first step toward building more secure systems. This project is maintained by me in my spare time as a contribution to the ethical hacking community.</p>
+            
+            <h3>SUPPORT THE PROJECT</h3>
+            <p>If you find this resource valuable, consider supporting its ongoing development and maintenance:</p>
+            
+            <div style="background-color: #1a1a1a; padding: 20px; border-radius: 5px; margin: 20px 0; border: 1px solid #0f0;">
+                <h4 style="margin-top: 0;">BITCOIN DONATIONS</h4>
+                <p>BTC Address: <code>1Hck1ng1ibr4ryXYZ123456789abcdefg</code></p>
+                <p>Your support helps keep the servers running and allows for regular updates to the tool database and documentation.</p>
+                <p>For collaboration, feedback, or just to say hello, reach out at <a href="mailto:contact@hackinglibrary.org" style="color: #0f0;">contact@hackinglibrary.org</a></p>
+            </div>
+            
+            <div style="font-style: italic; color: #aaa; margin-top: 30px; padding-top: 10px; border-top: 1px solid #333;">
+                <p>Remember: With great power comes great responsibility. Use these tools ethically, legally, and only on systems you own or have explicit permission to test.</p>
+            </div>
+        </section>
+
+        <!-- Privacy Section -->
+        <section id="privacy" class="page-section">
+            <h2>PRIVACY POLICY</h2>
+            
+            <p>In a world where data has become the new oil, we take a radical stance: <span style="color: #0f0; font-weight: bold;">we collect absolutely nothing from you</span>.</p>
+            
+            <h3>OUR PRIVACY COMMITMENT</h3>
+            <ul>
+                <li><strong>Zero Data Collection:</strong> We don't track you, we don't profile you, we don't analyze your behavior. This website doesn't use cookies, tracking pixels, or any other surveillance technologies.</li>
+                <li><strong>No Analytics:</strong> We've deliberately chosen not to implement any analytics platforms. We don't know how many visitors we get, where they come from, or what they look at - and we like it that way.</li>
+                <li><strong>No Third-Party Resources:</strong> This site loads everything locally, with no calls to external services that might track your activity across the web.</li>
+            </ul>
+            
+            <h3>THE STATE OF DIGITAL PRIVACY</h3>
+            <p>Unlike the tech giants who have built business models around harvesting your personal information, we believe privacy is a fundamental right, not a feature to be toggled on and off.</p>
+            
+            <p>Companies like Meta, Google, and Microsoft have constructed vast surveillance architectures that track nearly every aspect of digital life. Their business models fundamentally depend on knowing everything about you to serve targeted advertisements and influence your behavior. Programs like <a href="https://en.wikipedia.org/wiki/PRISM" target="_blank" style="color: #0f0;">PRISM</a> have revealed the extent to which these companies have worked with governmental agencies to provide backdoor access to your personal data.</p>
+            
+            <p>We respectfully but firmly reject this approach to the internet. The Hacking Library stands as a small example of how the web can function without surveillance capitalism - just useful information freely shared with those who seek it.</p>
+            
+            <h3>CONTACT</h3>
+            <p>If you have questions about our privacy stance or anything else, you can reach us at <a href="mailto:privacy@hackinglibrary.org" style="color: #0f0;">privacy@hackinglibrary.org</a></p>
+            
+            <div style="background-color: #1a1a1a; padding: 20px; border-radius: 5px; margin: 20px 0; border: 1px solid #0f0;">
+                <h4 style="margin-top: 0;">Staying Safe Online: Strategies for Privacy and Anonymity</h4>
+                
+                <p>
+                    In an era where digital surveillance is rampant, safeguarding your privacy online has become essential. With increasing surveillance and data collection by corporations and governments, it's essential to take proactive steps to protect your anonymity. For those interested in ethical hacking, tools like <a href="https://www.torproject.org/" target="_blank">Tor Browser</a> are indispensable. Tor routes your internet traffic through a series of volunteer-operated servers, making it extremely difficult to trace your online activities. 
+                
+                    Another excellent option is <a href="https://tails.boum.org/" target="_blank">Tails OS</a>, a live operating system that you can start on almost any computer from a USB stick or a DVD. It helps you use the internet anonymously and leaves no trace unless explicitly asked. For a more advanced solution, consider <a href="https://www.qubes-os.org/" target="_blank">Qubes OS</a>, which offers a security architecture that isolates different tasks in separate virtual machines, enhancing security and privacy.
+                
+                    Additionally, <a href="https://www.whonix.org/" target="_blank">Whonix</a> is another great operating system for maintaining anonymity, as it runs on a virtual machine and routes all connections through the Tor network. While there are many tools available, some popular options compromise your privacy. For instance, many <a href="https://www.expressvpn.com/" target="_blank">VPNs</a> log user data and can be compelled to share this information with authorities, often exposing your IP address.
+                
+                    Browsers like <a href="https://www.google.com/chrome/" target="_blank">Google Chrome</a> and <a href="https://www.microsoft.com/en-us/edge" target="_blank">Microsoft Edge</a> are notorious for tracking user data and collecting information for advertising purposes. Instead, consider using privacy-focused browsers like <a href="https://duckduckgo.com/" target="_blank">DuckDuckGo</a> or the <a href="https://www.torproject.org/" target="_blank">Tor Browser</a>. 
+                
+                    Furthermore, Microsoft has faced criticism for its data collection practices and lack of transparency, making it wise to switch to a Linux-based operating system for better privacy and security. If you value your privacy, consider alternatives like <a href="https://www.linuxmint.com/" target="_blank">Linux</a>, <a href="https://tails.boum.org/" target="_blank">Tails OS</a>, <a href="https://www.qubes-os.org/" target="_blank">Qubes OS</a>, and <a href="https://www.whonix.org/" target="_blank">Whonix</a>. 
+                
+                    Lastly, be cautious of platforms like <a href="https://www.facebook.com/" target="_blank">Facebook</a>, which have been involved in numerous privacy scandals. For messaging, consider alternatives like <a href="https://signal.org/" target="_blank">Signal</a> or <a href="https://telegram.org/" target="_blank">Telegram</a>, and for social networking, platforms like <a href="https://joinmastodon.org/" target="_blank">Mastodon</a> can be more privacy-conscious choices. Protecting your privacy online is not just a personal choice; it's a necessity in today's digital landscape.
+                </p>
+            </div>
+        </section>
+        
+    </main>
+
+    <footer>
+        <p>© 2025 Hacking Library - Ethical Security Tools and Resources</p>
+    </footer>
+
+    <canvas class="matrix-animation"></canvas>
+    <script src="script.js"></script>
+</body>
+</html>
