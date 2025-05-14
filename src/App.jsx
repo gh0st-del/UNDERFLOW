@@ -1,9 +1,15 @@
-function App()
-{
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import NavLink from "./components/NavLink";
+
+function App() {
   return (
-    <div className="w-full h-dvh flex justify-center items-center">
-      <h1 className="text-6xl font-bold">UNDERFLOW</h1>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="home"></Route>
+      </Routes>
+
+      <NavLink to={"home"} label={"HOME"}></NavLink>
+    </BrowserRouter>
   );
 }
 
