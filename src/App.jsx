@@ -1,9 +1,21 @@
-function App()
-{
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import AppLayout from "./components/AppLayout";
+
+function App() {
   return (
-    <div className="w-full h-dvh flex justify-center items-center">
-      <h1 className="text-6xl font-bold">UNDERFLOW</h1>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<AppLayout />}>
+          <Route index element={<Home />} />
+          {/* 
+            ...
+            here another pages that belong to Applayout
+            ...
+          */}
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
