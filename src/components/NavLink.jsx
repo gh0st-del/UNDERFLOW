@@ -1,6 +1,16 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
+/**
+ * Renders a navigation link with customizable label, padding, and font size.
+ *
+ * @param {Object} props - The properties for the navigation link.
+ * @param {string} props.path - The URL path the link navigates to.
+ * @param {string} [props.label="link"] - The text displayed for the link.
+ * @param {number} [props.horizontalPadding=1] - Horizontal padding in `rem` units.
+ * @param {number} [props.fontSize=1] - Font size in `rem` units.
+ * @returns {JSX.Element} A styled and animated navigation link component.
+ */
 function NavLink({path, label = "link", horizontalPadding = 1, fontSize = 1})
 {
     const [isClicked, SetIsClicked] = useState(false);
