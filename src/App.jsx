@@ -8,7 +8,7 @@ function App() {
         <Route path="home"></Route>
       </Routes>
 
-      <NavLink to={"home"} label={"HOME"}></NavLink>
+      <NavLink to={"home"} label={"HOME"} size={2}></NavLink>
     </BrowserRouter>
   );
 }
