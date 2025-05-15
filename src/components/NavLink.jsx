@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-function NavLink({path, label = "link", size = 1})
+function NavLink({path, label = "link", horizontalPadding = 1, fontSize = 1})
 {
     const [isClicked, SetIsClicked] = useState(false);
 
@@ -10,27 +10,29 @@ function NavLink({path, label = "link", size = 1})
     const part2 = label.slice(mid).toUpperCase();
 
     return (
-        <Link to={path} className={`w-fit pl-11 pr-11 pt-2 pb-2 flex justify-center border-graphite-800 overflow-hidden relative group after:content-[''] after:absolute after:top-0 after:-z-10 after:w-[78%] after:h-full after:bg-amber-500 ${isClicked ? "after:left-0" : "after:-left-100"} after:transition-all after:ease-in-out after:duration-300`} onClick={() => SetIsClicked(!isClicked)}
+        <Link to={path} className={`w-fit flex justify-center border-graphite-800 overflow-hidden relative group after:content-[''] after:absolute after:top-0 after:-z-10 after:w-[100%] after:h-full after:bg-amber-500 ${isClicked ? "after:left-0" : "after:-left-1/1"} after:transition-all after:ease-in-out after:duration-300`} onClick={() => SetIsClicked(!isClicked)}
         style={{
-            padding: `calc(0.5rem * ${size}) calc(2.75rem * ${size})`,
-            borderWidth: `calc(3px * ${size})`,
+            padding: `calc(0.5rem * ${fontSize}) calc(1rem * ${fontSize} * ${horizontalPadding})`,
+            borderWidth: `calc(3px * ${fontSize})`,
         }}>
             <span className={`relative text-graphite-800 transition-all before:content-[''] before:bg-graphite-800 before:absolute before:bottom-1 before:w-0 group-hover:before:w-full before:h-[var(--before-height)] before:transition-all before:ease-in-out before:duration-300`}
             style={{
-                fontSize: `calc(1.5rem * ${size})`,
-                "--before-height": `calc(2px * ${size})`,
-                left: `${isClicked ? `calc(1.0rem * ${-size})` : "0"}`
+                fontSize: `calc(1.5rem * ${fontSize})`,
+                "--before-height": `calc(2px * ${fontSize})`,
+                left: `${isClicked ? `calc(1.0rem * ${-fontSize})` : "0"}`
             }}>{label}</span>
-            <span className={`absolute -translate-y-1/2 [writing-mode:sideways-lr] top-1/2 ${isClicked ? "right-3" : "-right-8"} transition-all ease-in-out duration-300`}
+            <span className={`h-full pr-8 text-center absolute -translate-y-1/2 [writing-mode:sideways-lr] top-1/2 transition-all ease-in-out duration-300 bg-white leading-4`}
             style={{
-                fontSize: `calc(1.5rem * ${size * 0.7})`,
-                right: `${isClicked ? `calc(0.75rem * ${size})` : `calc(2rem * ${-size})`}`
+                paddingRight: `calc(1.45rem * ${fontSize * 0.7})`,
+                fontSize: `calc(1.5rem * ${fontSize * 0.7})`,
+                right: `${isClicked ? `calc(0rem * ${fontSize} - 0.1rem)` : `calc(2rem * ${-fontSize})`}`,
+                lineHeight: `calc(1.5rem * ${fontSize * 0.7})`,
             }}>{part1}</span>
-            <span className={`absolute -translate-y-1/2 [writing-mode:sideways-lr] top-1/2 ${isClicked ? "right-0" : "-right-8"} transition-all ease-in-out delay-150 duration-300 bg-white leading-4`}
+            <span className={`h-full text-center absolute -translate-y-1/2 [writing-mode:sideways-lr] top-1/2 transition-all ease-in-out delay-150 duration-300 bg-white leading-4`}
             style={{
-                fontSize: `calc(1.5rem * ${size * 0.7})`,
-                right: `${isClicked ? "0" : `calc(2rem * ${-size})`}`,
-                lineHeight: `calc(1rem * ${size})`
+                fontSize: `calc(1.5rem * ${fontSize * 0.7})`,
+                right: `${isClicked ? "0" : `calc(2rem * ${-fontSize})`}`,
+                lineHeight: `calc(1rem * ${fontSize})`
             }}>{part2}</span>
         </Link>
     ); 
