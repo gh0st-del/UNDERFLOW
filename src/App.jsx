@@ -8,7 +8,12 @@ function App() {
         <Route path="home"></Route>
       </Routes>
 
-      <NavLink to={"home"} label={"HOME"} horizontalPadding={2} fontSize={2}></NavLink>
+      <NavLink 
+        to={"home"} 
+        label={"HOME"} 
+        horizontalPadding={2} 
+        fontSize={2}
+      ></NavLink>
     </BrowserRouter>
   );
 }
