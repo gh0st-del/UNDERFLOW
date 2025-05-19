@@ -1,19 +1,20 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import NavLink from "./components/NavLink";
+import Home from "./pages/Home";
+import AppLayout from "./components/AppLayout";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="home"></Route>
+        <Route path="/" element={<AppLayout />}>
+          <Route index element={<Home />} />
+          {/* 
+            ...
+            here another pages that belong to Applayout
+            ...
+          */}
+        </Route>
       </Routes>
-
-      <NavLink 
-        to={"home"} 
-        label={"HOME"} 
-        horizontalPadding={2} 
-        fontSize={2}
-      ></NavLink>
     </BrowserRouter>
   );
 }
