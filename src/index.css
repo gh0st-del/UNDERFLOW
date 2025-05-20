@@ -1,1 +1,44 @@
 @import "tailwindcss";
+
+@layer base {
+  * {
+    padding: 0;
+    margin: 0;
+
+    box-sizing: border-box;
+  }
+}
+
+@theme {
+  --color-graphite-100: #CCCCCC;
+  --color-graphite-200: #A9A9A9;
+  --color-graphite-300: #888888;
+  --color-graphite-400: #747474;
+  --color-graphite-500: #606060;
+  --color-graphite-600: #4B4B4B;
+  --color-graphite-700: #373737;
+  --color-graphite-800: #222222;
+  --color-graphite-900: #0E0E0E;
+}
+
+@layer utilities {
+  .bg-graphite-100 { background-color: var(--color-graphite-100); }
+  .bg-graphite-200 { background-color: var(--color-graphite-200); }
+  .bg-graphite-300 { background-color: var(--color-graphite-300); }
+  .bg-graphite-400 { background-color: var(--color-graphite-400); }
+  .bg-graphite-500 { background-color: var(--color-graphite-500); }
+  .bg-graphite-600 { background-color: var(--color-graphite-600); }
+  .bg-graphite-700 { background-color: var(--color-graphite-700); }
+  .bg-graphite-800 { background-color: var(--color-graphite-800); }
+  .bg-graphite-900 { background-color: var(--color-graphite-900); }
+
+  .text-graphite-100 { color: var(--color-graphite-100); }
+  .text-graphite-200 { color: var(--color-graphite-200); }
+  .text-graphite-300 { color: var(--color-graphite-300); }
+  .text-graphite-400 { color: var(--color-graphite-400); }
+  .text-graphite-500 { color: var(--color-graphite-500); }
+  .text-graphite-600 { color: var(--color-graphite-600); }
+  .text-graphite-700 { color: var(--color-graphite-700); }
+  .text-graphite-800 { color: var(--color-graphite-800); }
+  .text-graphite-900 { color: var(--color-graphite-900); }
+}
