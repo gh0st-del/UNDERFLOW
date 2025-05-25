@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-function TextOutline({text})
+function TextOutline({text, fontSize, outlineWidth, outlineColor})
 {
     const textRef = useRef(null);
 
@@ -17,15 +17,15 @@ function TextOutline({text})
         textRef.current.setAttribute('y', "0");
         textBBox = textRef.current.getBBox();
         textRef.current.setAttribute('y', `${-textBBox.y}`);
-    },[text]);
+    },[text, fontSize, outlineWidth, outlineColor]);
 
     return (
         <svg xmlns="http://www.w3.org/2000/svg">
             <text
                 ref={textRef}
-                fontSize="2rem"
-                stroke="black"
-                strokeWidth={1}
+                fontSize={fontSize}
+                stroke={outlineColor}
+                strokeWidth={outlineWidth}
                 fill="none"
             >
                 {text}
