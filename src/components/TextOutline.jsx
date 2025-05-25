@@ -1,5 +1,14 @@
 import { useEffect, useRef } from "react";
 
+/**
+ * Renders text with an outline.
+ *
+ * @param {Object} props - Component properties.
+ * @param {string} props.text - The text content to display.
+ * @param {number} props.fontSize - Font size in `rem` units.
+ * @param {number} props.outlineWidth - Outline width in `px`.
+ * @param {string} props.outlineColor - Color of the text outline (CSS color string).
+ */
 function TextOutline({text, fontSize, outlineWidth, outlineColor})
 {
     const textRef = useRef(null);
