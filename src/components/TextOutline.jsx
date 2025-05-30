@@ -12,9 +12,9 @@ import { useRef, useState } from "react";
  */
 function TextOutline({text, fontSize, outlineWidth, outlineColor})
 {
-    const [offset, SetOffset] = useState(0);
     const [height, SetHeight] = useState(0);
     const textRef = useRef(null);
+    const offset = useRef(null);
 
     const lines = text.split("\n");
 
@@ -25,7 +25,12 @@ function TextOutline({text, fontSize, outlineWidth, outlineColor})
 
         const firstLineBBox = textElement.firstChild.getBBox();
         SetHeight(firstLineBBox.height);
-        SetOffset(firstLineBBox.y);
+
+        if (!offset.current)
+        {
+            offset.current = firstLineBBox.y;
+            console.log(offset.current);
+        }
 
         let maxWidth = 0;
         const children = Array.from(textElement.children);
@@ -55,7 +60,7 @@ function TextOutline({text, fontSize, outlineWidth, outlineColor})
                 strokeWidth={outlineWidth}
                 fill="none"
             >
-                {lines.map((line, i) => <tspan key={i} x={0} y={i === 0 ? -offset : height * i - offset}>{line}</tspan>)}
+                {lines.map((line, i) => <tspan key={i} x={0} y={i === 0 ? -offset.current : height * i - offset.current}>{line}</tspan>)}
             </text>
         </svg>
     );
