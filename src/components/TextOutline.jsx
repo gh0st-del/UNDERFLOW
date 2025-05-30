@@ -7,10 +7,11 @@ import { useRef, useState } from "react";
  * @param {Object} props - Component properties.
  * @param {string} props.text - Text content to display. Use `\n` to indicate line breaks; the component will render each line separately. 
  * @param {number} props.fontSize - Font size in `rem` units.
+ * @param {number|string} props.fontWeight - Font weight of the text (e.g., `normal`, `bold`, `400`, `700`).
  * @param {number} props.outlineWidth - Outline width in `px`.
  * @param {string} props.outlineColor - Color of the text outline (CSS color string).
  */
-function TextOutline({text, fontSize, outlineWidth, outlineColor})
+function TextOutline({text, fontSize, fontWeight, outlineWidth, outlineColor})
 {
     const [height, SetHeight] = useState(0);
     const textRef = useRef(null);
@@ -48,14 +49,15 @@ function TextOutline({text, fontSize, outlineWidth, outlineColor})
         svg.setAttribute("width", maxWidth);
         svg.setAttribute("height", totalHeight);
         svg.setAttribute("viewBox", `0 0 ${maxWidth} ${totalHeight}`);
-    }, [text, fontSize, outlineWidth, outlineColor]);
+    }, [text, fontSize, outlineWidth, outlineColor, fontWeight]);
 
 
     return (
         <svg xmlns="http://www.w3.org/2000/svg">
             <text
                 ref={textRef}
-                fontSize={fontSize}
+                fontSize={`${fontSize}rem`}
+                fontWeight={fontWeight}
                 stroke={outlineColor}
                 strokeWidth={outlineWidth}
                 fill="none"
