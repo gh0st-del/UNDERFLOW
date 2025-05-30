@@ -1,32 +1,50 @@
-import { useEffect, useRef } from "react";
+import { useLayoutEffect } from "react";
+import { useRef, useState } from "react";
 
 /**
  * Renders text with an outline.
  *
  * @param {Object} props - Component properties.
- * @param {string} props.text - The text content to display.
+ * @param {string} props.text - Text content to display. Use `\n` to indicate line breaks; the component will render each line separately. 
  * @param {number} props.fontSize - Font size in `rem` units.
  * @param {number} props.outlineWidth - Outline width in `px`.
  * @param {string} props.outlineColor - Color of the text outline (CSS color string).
  */
 function TextOutline({text, fontSize, outlineWidth, outlineColor})
 {
+    const [offset, SetOffset] = useState(0);
+    const [height, SetHeight] = useState(0);
     const textRef = useRef(null);
 
-    useEffect(() =>
+    const lines = text.split("\n");
+
+    useLayoutEffect(() => 
     {
         const svg = textRef.current.parentElement;
-        let textBBox = textRef.current.getBBox();
+        const textElement = textRef.current;
 
-        svg.setAttribute("width", textBBox.width);
-        svg.setAttribute("height", textBBox.height);
-        svg.setAttribute('viewBox', `0 0 ${textBBox.width} ${textBBox.height}`);
+        const firstLineBBox = textElement.firstChild.getBBox();
+        SetHeight(firstLineBBox.height);
+        SetOffset(firstLineBBox.y);
 
-        textRef.current.setAttribute('x', -textBBox.x);
-        textRef.current.setAttribute('y', "0");
-        textBBox = textRef.current.getBBox();
-        textRef.current.setAttribute('y', `${-textBBox.y}`);
-    },[text, fontSize, outlineWidth, outlineColor]);
+        let maxWidth = 0;
+        const children = Array.from(textElement.children);
+        for (const child of children)
+        {
+            const bbox = child.getBBox();
+            if (bbox.width > maxWidth)
+            {
+                maxWidth = bbox.width;
+            }
+        }
+
+        const lineHeight = firstLineBBox.height;
+        const totalHeight = lineHeight * lines.length;
+        svg.setAttribute("width", maxWidth);
+        svg.setAttribute("height", totalHeight);
+        svg.setAttribute("viewBox", `0 0 ${maxWidth} ${totalHeight}`);
+    }, [text, fontSize, outlineWidth, outlineColor]);
+
 
     return (
         <svg xmlns="http://www.w3.org/2000/svg">
@@ -37,7 +55,7 @@ function TextOutline({text, fontSize, outlineWidth, outlineColor})
                 strokeWidth={outlineWidth}
                 fill="none"
             >
-                {text}
+                {lines.map((line, i) => <tspan key={i} x={0} y={i === 0 ? -offset : height * i - offset}>{line}</tspan>)}
             </text>
         </svg>
     );
