@@ -1,20 +1,20 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./pages/Home";
-import AppLayout from "./components/AppLayout";
+import NavLink from "./components/NavLink";
+import { useState } from "react";
 
-function App() {
+function App()
+{
+  const [selected, SetSelected] = useState(false);
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<AppLayout />}>
-          <Route index element={<Home />} />
-          {/* 
-            ...
-            here another pages that belong to Applayout
-            ...
-          */}
-        </Route>
+        <Route path="home"></Route>
       </Routes>
+
+      <div className="w-dvw h-dvh flex justify-center items-center">
+        <NavLink to={"home"} label={"HOME"} fontSize="clamp(0.5rem, 0.357rem + 0.714vw, 1rem)" selected={selected} onClick={() => SetSelected(!selected)}></NavLink>
+      </div>
     </BrowserRouter>
   );
 }
