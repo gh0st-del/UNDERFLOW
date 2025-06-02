@@ -1,10 +1,10 @@
-import DotBG from "./component/DotBG";
+import Button from "./component/Button";
 
 function App()
 {
   return (
     <div className="w-full h-dvh flex justify-center items-center">
-      <DotBG></DotBG>
+      <Button></Button>
     </div>
   );
 }
