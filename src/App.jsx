@@ -4,7 +4,11 @@ function App()
 {
   return (
     <div className="w-full h-dvh flex justify-center items-center">
-      <HoverLink to={"https://www.google.com"}></HoverLink>
+      <HoverLink 
+        to={"https://www.google.com"}
+        fontWeight="bold"
+        bgColor="orange"
+      ></HoverLink>
     </div>
   );
 }
