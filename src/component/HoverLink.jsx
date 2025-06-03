@@ -2,7 +2,7 @@ function HoverLink({label = "link", to, newPage = true, textColor = "blue", font
 {
     return(
         <a 
-                className="relative after:content-[''] after:w-0 hover:after:w-full after:h-1 hover:after:h-full after:bg-[var(--after-bg)] after:rounded-[var(--after-radius)] after:-z-1 after:absolute after:bottom-0 after:left-0 after:transition-[width,height] after:delay-[0ms,150ms]"
+            className="relative cursor-pointer after:content-[''] after:w-0 hover:after:w-full after:h-1 hover:after:h-full after:bg-[var(--after-bg)] after:rounded-[var(--after-radius)] after:-z-1 after:absolute after:bottom-0 after:left-0 after:transition-[width,height] after:delay-[0ms,150ms]"
             style={{
                 "--after-bg": bgColor,
                 "--after-radius": radius,
