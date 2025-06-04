@@ -20,10 +20,15 @@ function DotBG()
             precision mediump float;
 
             in vec2 aPosition;
+            in vec2 aTexCoord;
+
+            out vec2 vTexCoord;
             
             void main()
             {
                 gl_Position = vec4(aPosition, 0.0, 1.0);
+
+                vTexCoord = aTexCoord;
             }
         `;
 
@@ -32,11 +37,13 @@ function DotBG()
             #pragma vscode_glsllint_stage: frag
             precision mediump float;
 
+            in vec2 vTexCoord;
+
             out vec4 FragColor;
 
             void main()
             {
-                FragColor = vec4(1.0);
+                FragColor = vec4(vTexCoord, 0.0, 1.0);
             }
         `;
 
@@ -80,10 +87,10 @@ function DotBG()
         gl.useProgram(shaderProgram);
 
         const vertices = new Float32Array([
-            -1.0,  1.0,
-            -1.0, -1.0,
-             1.0, -1.0,
-             1.0,  1.0
+            -1.0,  1.0,     0.0, 1.0,
+            -1.0, -1.0,     0.0, 0.0,
+             1.0, -1.0,     1.0, 0.0,
+             1.0,  1.0,     1.0, 1.0
         ]);
 
         const indices = new Uint16Array([
@@ -103,8 +110,12 @@ function DotBG()
         gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, indices, gl.STATIC_DRAW);
 
         const aPositionLoc = gl.getAttribLocation(shaderProgram, "aPosition");
-        gl.vertexAttribPointer(aPositionLoc, 2, gl.FLOAT, false, 0, 0);
+        gl.vertexAttribPointer(aPositionLoc, 2, gl.FLOAT, false, vertices.BYTES_PER_ELEMENT * 4, 0);
         gl.enableVertexAttribArray(aPositionLoc);
+
+        const aTexCoordLoc = gl.getAttribLocation(shaderProgram, "aTexCoord");
+        gl.vertexAttribPointer(aTexCoordLoc, 2, gl.FLOAT, false, vertices.BYTES_PER_ELEMENT * 4, vertices.BYTES_PER_ELEMENT * 2);
+        gl.enableVertexAttribArray(aTexCoordLoc);
         
         const RenderLoop = () =>
         {
