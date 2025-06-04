@@ -3,7 +3,7 @@ import DotBG from "./component/DotBG";
 function App()
 {
   return (
-    <div className="w-full h-dvh flex justify-center items-center">
+    <div className="w-dvw h-dvh">
       <DotBG></DotBG>
     </div>
   );

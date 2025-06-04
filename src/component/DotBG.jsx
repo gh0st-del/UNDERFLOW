@@ -26,7 +26,7 @@ function DotBG()
             
             void main()
             {
-                gl_Position = vec4(aPosition, 0.0, 1.0);
+                gl_Position = vec4(aPosition * 0.5, 0.0, 1.0);
 
                 vTexCoord = aTexCoord;
             }
@@ -127,9 +127,26 @@ function DotBG()
             animRequestRef.current = requestAnimationFrame(RenderLoop);
         }
 
+        const ResizeCallback = () =>
+        {
+            canvasRef.current.width = canvasRef.current.offsetWidth;
+            canvasRef.current.height = canvasRef.current.offsetHeight;
+            gl.viewport(0, 0, canvasRef.current.width, canvasRef.current.height);
+
+            console.log(canvasRef.current.width);
+            console.log(canvasRef.current.height);
+        }
+
         animRequestRef.current = requestAnimationFrame(RenderLoop);
 
-        return () => cancelAnimationFrame(animRequestRef.current);
+        window.addEventListener("resize", ResizeCallback);
+        ResizeCallback();
+
+        return () => 
+        {
+            cancelAnimationFrame(animRequestRef.current);
+            window.removeEventListener("resize", ResizeCallback);
+        }
     }, []);
 
     return(
