@@ -79,11 +79,39 @@ function DotBG()
 
         gl.useProgram(shaderProgram);
 
+        const vertices = new Float32Array([
+            -1.0,  1.0,
+            -1.0, -1.0,
+             1.0, -1.0,
+             1.0,  1.0
+        ]);
+
+        const indices = new Uint16Array([
+            0, 1, 2,
+            2, 3, 0
+        ]);
+
+        const VAO = gl.createVertexArray();
+        gl.bindVertexArray(VAO);
+
+        const VBO = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, VBO);
+        gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+
+        const IBO = gl.createBuffer();
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, IBO);
+        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, indices, gl.STATIC_DRAW);
+
+        const aPositionLoc = gl.getAttribLocation(shaderProgram, "aPosition");
+        gl.vertexAttribPointer(aPositionLoc, 2, gl.FLOAT, false, 0, 0);
+        gl.enableVertexAttribArray(aPositionLoc);
         
         const RenderLoop = () =>
         {
             gl.clearColor(0.1, 0.1, 0.1, 1.0);
             gl.clear(gl.COLOR_BUFFER_BIT);
+
+            gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0);
     
             animRequestRef.current = requestAnimationFrame(RenderLoop);
         }
