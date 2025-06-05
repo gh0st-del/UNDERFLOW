@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-function DotBG({width = "128px", height = "128px", dotColor = "rgb(255, 255, 255)", bgColor = "rgb(0, 0, 0)", gridSize = 10, offset = 0.5, radius = 0.5})
+function DotBG({width = "128px", height = "128px", dotColor = "rgb(255, 255, 255)", bgColor = "rgb(0, 0, 0)", gridSize = 10, offset = 0.5, radius = 0.5, animSpeed = 1})
 {
     const canvasRef = useRef(null);
     const animRequestRef = useRef(null);
@@ -49,17 +49,18 @@ function DotBG({width = "128px", height = "128px", dotColor = "rgb(255, 255, 255
             uniform int uGridSize;
             uniform float uOffset;
             uniform float uRadius;
+            uniform float uAnimSpeed;
 
             void main()
             {
                 float mask = mod(floor(vTexCoord.x * float(uGridSize)), 2.0) - 0.5;
-                vec2 grid = fract(vTexCoord * float(uGridSize) + vec2(0.0, mask * uOffset)) * 2.0 - 1.0;
+                vec2 grid = fract(vTexCoord * float(uGridSize) + vec2(0.0, mask * uOffset * uAnimSpeed)) * 2.0 - 1.0;
 
                 float dist = length(grid) - uRadius;
                 float edge = fwidth(dist);
                 float circle = 1.0 - smoothstep(-edge, edge, dist);
 
-                FragColor = vec4(mix(uBgColor, uDotColor, circle), 1.0);
+                FragColor = vec4(mix(mix(uBgColor, uDotColor, circle), uBgColor, 1.0 - vTexCoord.x * vTexCoord.x), 1.0);
             }
         `;
 
@@ -141,6 +142,9 @@ function DotBG({width = "128px", height = "128px", dotColor = "rgb(255, 255, 255
         
         const RenderLoop = () =>
         {
+            const time = performance.now() * 0.005;
+            gl.uniform1f(gl.getUniformLocation(shaderProgram, "uAnimSpeed"), time * animSpeed);
+
             gl.clearColor(0.1, 0.1, 0.1, 1.0);
             gl.clear(gl.COLOR_BUFFER_BIT);
 
@@ -166,7 +170,7 @@ function DotBG({width = "128px", height = "128px", dotColor = "rgb(255, 255, 255
             cancelAnimationFrame(animRequestRef.current);
             window.removeEventListener("resize", ResizeCallback);
         }
-    }, [dotColor, bgColor, gridSize, offset, radius]);
+    }, [width, height, dotColor, bgColor, gridSize, offset, radius, animSpeed]);
 
     return(
         <canvas
