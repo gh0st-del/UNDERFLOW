@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-function DotBG()
+function DotBG({width = "128px", height = "128px"})
 {
     const canvasRef = useRef(null);
     const animRequestRef = useRef(null);
@@ -152,7 +152,11 @@ function DotBG()
     return(
         <canvas
             ref={canvasRef}
-            className="block w-full h-full min-h-0"
+            className="block min-h-0"
+            style={{
+                width: width,
+                height: height
+            }}
         ></canvas>
     );
 
