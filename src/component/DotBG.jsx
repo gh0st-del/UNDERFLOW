@@ -26,7 +26,7 @@ function DotBG({width = "128px", height = "128px"})
             
             void main()
             {
-                gl_Position = vec4(aPosition * 0.5, 0.0, 1.0);
+                gl_Position = vec4(aPosition, 0.0, 1.0);
 
                 vTexCoord = aTexCoord;
             }
@@ -43,7 +43,17 @@ function DotBG({width = "128px", height = "128px"})
 
             void main()
             {
-                FragColor = vec4(vTexCoord, 0.0, 1.0);
+                int gridSize = 10;
+                float offset = 0.5;
+                float mask = mod(floor(vTexCoord.x * float(gridSize)), 2.0) - 0.5;
+                vec2 grid = fract(vTexCoord * float(gridSize) + vec2(0.0, mask * offset)) * 2.0 - 1.0;
+
+                float radius = 0.5;
+                float dist = length(grid) - radius;
+                float edge = fwidth(dist);
+                float circle = 1.0 - smoothstep(-edge, edge, dist);
+
+                FragColor = vec4(vec3(circle), 1.0);
             }
         `;
 
