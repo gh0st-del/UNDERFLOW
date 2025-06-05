@@ -1,9 +1,12 @@
 import { useEffect, useRef } from "react";
 
-function DotBG({width = "128px", height = "128px"})
+function DotBG({width = "128px", height = "128px", dotColor = "rgb(255, 255, 255)", bgColor = "rgb(0, 0, 0)", gridSize = 10, offset = 0.5, radius = 0.5})
 {
     const canvasRef = useRef(null);
     const animRequestRef = useRef(null);
+
+    const [dotColorR, dotColorG, dotColorB] = dotColor.slice(4, -1).split(',').map(value => Number(value));
+    const [bgColorR, bgColorG, bgColorB] = bgColor.slice(4, -1).split(',').map(value => Number(value));
 
     useEffect(() =>
     {
@@ -41,19 +44,22 @@ function DotBG({width = "128px", height = "128px"})
 
             out vec4 FragColor;
 
+            uniform vec3 uDotColor;
+            uniform vec3 uBgColor;
+            uniform int uGridSize;
+            uniform float uOffset;
+            uniform float uRadius;
+
             void main()
             {
-                int gridSize = 10;
-                float offset = 0.5;
-                float mask = mod(floor(vTexCoord.x * float(gridSize)), 2.0) - 0.5;
-                vec2 grid = fract(vTexCoord * float(gridSize) + vec2(0.0, mask * offset)) * 2.0 - 1.0;
+                float mask = mod(floor(vTexCoord.x * float(uGridSize)), 2.0) - 0.5;
+                vec2 grid = fract(vTexCoord * float(uGridSize) + vec2(0.0, mask * uOffset)) * 2.0 - 1.0;
 
-                float radius = 0.5;
-                float dist = length(grid) - radius;
+                float dist = length(grid) - uRadius;
                 float edge = fwidth(dist);
                 float circle = 1.0 - smoothstep(-edge, edge, dist);
 
-                FragColor = vec4(vec3(circle), 1.0);
+                FragColor = vec4(mix(uBgColor, uDotColor, circle), 1.0);
             }
         `;
 
@@ -95,6 +101,12 @@ function DotBG({width = "128px", height = "128px"})
         gl.deleteShader(fragShader);
 
         gl.useProgram(shaderProgram);
+
+        gl.uniform3f(gl.getUniformLocation(shaderProgram, "uDotColor"), dotColorR / 255, dotColorG / 255, dotColorB / 255);
+        gl.uniform3f(gl.getUniformLocation(shaderProgram, "uBgColor"), bgColorR / 255, bgColorG / 255, bgColorB / 255);
+        gl.uniform1i(gl.getUniformLocation(shaderProgram, "uGridSize"), gridSize);
+        gl.uniform1f(gl.getUniformLocation(shaderProgram, "uOffset"), offset);
+        gl.uniform1f(gl.getUniformLocation(shaderProgram, "uRadius"), radius);
 
         const vertices = new Float32Array([
             -1.0,  1.0,     0.0, 1.0,
@@ -142,9 +154,6 @@ function DotBG({width = "128px", height = "128px"})
             canvasRef.current.width = canvasRef.current.offsetWidth;
             canvasRef.current.height = canvasRef.current.offsetHeight;
             gl.viewport(0, 0, canvasRef.current.width, canvasRef.current.height);
-
-            console.log(canvasRef.current.width);
-            console.log(canvasRef.current.height);
         }
 
         animRequestRef.current = requestAnimationFrame(RenderLoop);
@@ -157,7 +166,7 @@ function DotBG({width = "128px", height = "128px"})
             cancelAnimationFrame(animRequestRef.current);
             window.removeEventListener("resize", ResizeCallback);
         }
-    }, []);
+    }, [dotColor, bgColor, gridSize, offset, radius]);
 
     return(
         <canvas
