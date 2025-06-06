@@ -7,7 +7,7 @@ function App()
       <DotBG
         width="50%"
         height="50%"
-        gridSize={80}
+        gridSize={20}
         radius={0.3}
         animSpeed={0.7}
       ></DotBG>

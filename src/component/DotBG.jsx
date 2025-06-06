@@ -23,15 +23,10 @@ function DotBG({width = "128px", height = "128px", dotColor = "rgb(255, 255, 255
             precision mediump float;
 
             in vec2 aPosition;
-            in vec2 aTexCoord;
 
-            out vec2 vTexCoord;
-            
             void main()
             {
                 gl_Position = vec4(aPosition, 0.0, 1.0);
-
-                vTexCoord = aTexCoord;
             }
         `;
 
@@ -40,10 +35,9 @@ function DotBG({width = "128px", height = "128px", dotColor = "rgb(255, 255, 255
             #pragma vscode_glsllint_stage: frag
             precision mediump float;
 
-            in vec2 vTexCoord;
-
             out vec4 FragColor;
 
+            uniform vec2 uResolution;
             uniform vec3 uDotColor;
             uniform vec3 uBgColor;
             uniform int uGridSize;
@@ -53,14 +47,20 @@ function DotBG({width = "128px", height = "128px", dotColor = "rgb(255, 255, 255
 
             void main()
             {
-                float mask = mod(floor(vTexCoord.x * float(uGridSize)), 2.0) - 0.5;
-                vec2 grid = fract(vTexCoord * float(uGridSize) + vec2(0.0, mask * uOffset * uAnimSpeed)) * 2.0 - 1.0;
+                vec2 uv = (gl_FragCoord.xy / uResolution) * 2.0 - 1.0;
+                float aspect = uResolution.x / uResolution.y;
+                uv *= (aspect < 1.0) ? vec2(aspect, 1.0) : vec2(1.0, 1.0 / aspect);
+
+                float mask = mod(floor(uv.x * float(uGridSize)), 2.0) - 0.5;
+                vec2 grid = fract(uv * float(uGridSize) + vec2(0.0, mask * uOffset * uAnimSpeed)) * 2.0 - 1.0;
 
                 float dist = length(grid) - uRadius;
                 float edge = fwidth(dist);
                 float circle = 1.0 - smoothstep(-edge, edge, dist);
 
-                FragColor = vec4(mix(mix(uBgColor, uDotColor, circle), uBgColor, 1.0 - vTexCoord.x * vTexCoord.x), 1.0);
+                float gradient = vec2(gl_FragCoord.xy / uResolution).x;
+
+                FragColor = vec4(mix(uBgColor, uDotColor, circle) * gradient * gradient, 1.0);
             }
         `;
 
@@ -135,10 +135,6 @@ function DotBG({width = "128px", height = "128px", dotColor = "rgb(255, 255, 255
         const aPositionLoc = gl.getAttribLocation(shaderProgram, "aPosition");
         gl.vertexAttribPointer(aPositionLoc, 2, gl.FLOAT, false, vertices.BYTES_PER_ELEMENT * 4, 0);
         gl.enableVertexAttribArray(aPositionLoc);
-
-        const aTexCoordLoc = gl.getAttribLocation(shaderProgram, "aTexCoord");
-        gl.vertexAttribPointer(aTexCoordLoc, 2, gl.FLOAT, false, vertices.BYTES_PER_ELEMENT * 4, vertices.BYTES_PER_ELEMENT * 2);
-        gl.enableVertexAttribArray(aTexCoordLoc);
         
         const RenderLoop = () =>
         {
@@ -158,6 +154,7 @@ function DotBG({width = "128px", height = "128px", dotColor = "rgb(255, 255, 255
             canvasRef.current.width = canvasRef.current.offsetWidth;
             canvasRef.current.height = canvasRef.current.offsetHeight;
             gl.viewport(0, 0, canvasRef.current.width, canvasRef.current.height);
+            gl.uniform2f(gl.getUniformLocation(shaderProgram, "uResolution"), canvasRef.current.offsetWidth, canvasRef.current.offsetHeight);
         }
 
         animRequestRef.current = requestAnimationFrame(RenderLoop);
