@@ -44,6 +44,7 @@ function DotBG({width = "128px", height = "128px", dotColor = "rgb(255, 255, 255
             uniform float uOffset;
             uniform float uRadius;
             uniform float uAnimSpeed;
+            uniform vec2 uMousePos;
 
             void main()
             {
@@ -51,16 +52,24 @@ function DotBG({width = "128px", height = "128px", dotColor = "rgb(255, 255, 255
                 float aspect = uResolution.x / uResolution.y;
                 uv *= (aspect < 1.0) ? vec2(aspect, 1.0) : vec2(1.0, 1.0 / aspect);
 
-                float mask = mod(floor(uv.x * float(uGridSize)), 2.0) - 0.5;
-                vec2 grid = fract(uv * float(uGridSize) + vec2(0.0, mask * uOffset * uAnimSpeed)) * 2.0 - 1.0;
+                vec2 origin = (uMousePos / uResolution) * 2.0 - 1.0;
+                origin *= (aspect < 1.0) ? vec2(aspect, 1.0) : vec2(1.0, 1.0 / aspect);
+                uv -= origin;
 
+                float width = 0.2;
+                float height = 1.0;
+                float bump = exp(-length(uv) / width) * height + 1.0;
+                uv /= bump;
+                
+                float mask = mod(floor((uv.x + origin.x) * float(uGridSize)), 2.0) - 0.5;
+                vec2 grid = fract((uv + origin) * float(uGridSize) + vec2(0.0, mask * uOffset * uAnimSpeed)) * 2.0 - 1.0;
+                
                 float dist = length(grid) - uRadius;
                 float edge = fwidth(dist);
                 float circle = 1.0 - smoothstep(-edge, edge, dist);
 
-                float gradient = vec2(gl_FragCoord.xy / uResolution).x;
-
-                FragColor = vec4(mix(uBgColor, uDotColor, circle) * gradient * gradient, 1.0);
+                float light = exp(-length(uv) * length(uv) / width);
+                FragColor = vec4(mix(uBgColor, mix(uDotColor * 0.08, uDotColor, light), circle), 1.0);
             }
         `;
 
@@ -108,12 +117,14 @@ function DotBG({width = "128px", height = "128px", dotColor = "rgb(255, 255, 255
         gl.uniform1i(gl.getUniformLocation(shaderProgram, "uGridSize"), gridSize);
         gl.uniform1f(gl.getUniformLocation(shaderProgram, "uOffset"), offset);
         gl.uniform1f(gl.getUniformLocation(shaderProgram, "uRadius"), radius);
+        gl.uniform2f(gl.getUniformLocation(shaderProgram, "uOrigin"), 0.0, 0.0);
+        gl.uniform2f(gl.getUniformLocation(shaderProgram, "uMousePos"), -10000.0, -10000.0);
 
         const vertices = new Float32Array([
-            -1.0,  1.0,     0.0, 1.0,
-            -1.0, -1.0,     0.0, 0.0,
-             1.0, -1.0,     1.0, 0.0,
-             1.0,  1.0,     1.0, 1.0
+            -1.0,  1.0,
+            -1.0, -1.0,
+             1.0, -1.0,
+             1.0,  1.0    
         ]);
 
         const indices = new Uint16Array([
@@ -133,7 +144,7 @@ function DotBG({width = "128px", height = "128px", dotColor = "rgb(255, 255, 255
         gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, indices, gl.STATIC_DRAW);
 
         const aPositionLoc = gl.getAttribLocation(shaderProgram, "aPosition");
-        gl.vertexAttribPointer(aPositionLoc, 2, gl.FLOAT, false, vertices.BYTES_PER_ELEMENT * 4, 0);
+        gl.vertexAttribPointer(aPositionLoc, 2, gl.FLOAT, false, vertices.BYTES_PER_ELEMENT * 2, 0);
         gl.enableVertexAttribArray(aPositionLoc);
         
         const RenderLoop = () =>
@@ -148,6 +159,7 @@ function DotBG({width = "128px", height = "128px", dotColor = "rgb(255, 255, 255
     
             animRequestRef.current = requestAnimationFrame(RenderLoop);
         }
+        animRequestRef.current = requestAnimationFrame(RenderLoop);
 
         const ResizeCallback = () =>
         {
@@ -156,16 +168,25 @@ function DotBG({width = "128px", height = "128px", dotColor = "rgb(255, 255, 255
             gl.viewport(0, 0, canvasRef.current.width, canvasRef.current.height);
             gl.uniform2f(gl.getUniformLocation(shaderProgram, "uResolution"), canvasRef.current.offsetWidth, canvasRef.current.offsetHeight);
         }
-
-        animRequestRef.current = requestAnimationFrame(RenderLoop);
-
-        window.addEventListener("resize", ResizeCallback);
         ResizeCallback();
+
+        const MouseMoveCallback = (event) =>
+        {
+            const rect = canvasRef.current.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            gl.uniform2f(gl.getUniformLocation(shaderProgram, "uMousePos"), x, rect.height - y);
+        }
+        
+        window.addEventListener("resize", ResizeCallback);
+        window.addEventListener("mousemove", MouseMoveCallback);
+        window.addEventListener("mouseenter", MouseMoveCallback);
 
         return () => 
         {
             cancelAnimationFrame(animRequestRef.current);
             window.removeEventListener("resize", ResizeCallback);
+            window.removeEventListener("mousemove", MouseMoveCallback);
         }
     }, [width, height, dotColor, bgColor, gridSize, offset, radius, animSpeed]);
 
