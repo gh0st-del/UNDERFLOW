@@ -1,4 +1,4 @@
-import DotBG from "./component/DotBG";
+import DotBG from "./components/DotBG";
 
 function App()
 {
