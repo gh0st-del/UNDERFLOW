@@ -1,9 +1,14 @@
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 
-function Button({label = "button", onClick, hpad = "10px", wpad = "5px", primaryCol = "white", secondaryCol = "black", borderWidth = "2px", radius = "4px", fontWeight = "bold"})
+function Button({label = "button", onClick, hpad = "10px", wpad = "5px", primaryCol = "white", secondaryCol = "black", borderWidth = "2px", round = "4px", fontWeight = "bold", animDur = "500ms"})
 {
     const circleRef = useRef(null);
     const buttonRef = useRef(null);
+
+    const [radius, setRadius] = useState(0);
+    const [isAnimating, setIsAnimating] = useState(false);
+    const [x, setX] = useState(0);
+    const [y, setY] = useState(0);
 
     useLayoutEffect(() =>
     {
@@ -13,12 +18,15 @@ function Button({label = "button", onClick, hpad = "10px", wpad = "5px", primary
             const rect = svg.getBoundingClientRect();
             const x = event.clientX - rect.left;
             const y = event.clientY - rect.top;
+            setX(x);
+            setY(y);
             circleRef.current.setAttribute("cx", x);
             circleRef.current.setAttribute("cy", y);
-        }
+        };
+
+        setRadius(buttonRef.current.getBoundingClientRect().height / 3);
 
         buttonRef.current.addEventListener("mousemove", MouseMoveCallback);
-
     }, []);
 
     return(
@@ -29,12 +37,14 @@ function Button({label = "button", onClick, hpad = "10px", wpad = "5px", primary
                 padding: `${wpad} ${hpad}`,
                 borderWidth: borderWidth,
                 borderColor: secondaryCol,
-                borderRadius: radius,
+                borderRadius: round,
                 color: secondaryCol,
                 fontWeight: fontWeight,
                 backgroundColor: primaryCol
             }}
             onClick={onClick}
+            onMouseEnter={() => setIsAnimating(true)}
+            onMouseLeave={() => setIsAnimating(false)}
         >
             <span>{label}</span>
             <svg
@@ -42,9 +52,16 @@ function Button({label = "button", onClick, hpad = "10px", wpad = "5px", primary
                 xmlns="http://www.w3.org/2000/svg"
             >
                 <circle
+                    className="transition-transform"
                     ref={circleRef}
-                    r="10" 
-                    fill={secondaryCol} />
+                    r={radius}
+                    fill={secondaryCol}
+                    style={{
+                        transform: isAnimating ? `scale(10)` : `scale(0)`,
+                        transformOrigin: `${x}px ${y}px`,
+                        transitionDuration: animDur
+                    }}
+                />
             </svg>
         </button>
     );
