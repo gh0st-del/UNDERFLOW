@@ -4,7 +4,7 @@ function App()
 {
   return (
     <div className="w-full h-dvh flex justify-center items-center">
-      <Button></Button>
+      <Button wpad="100px"></Button>
     </div>
   );
 }
